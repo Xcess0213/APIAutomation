@@ -11,7 +11,7 @@ import java.util.HashMap;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-public class GoRestDiscountTest {
+public class demo_Mersys_DiscountTest {
 
     private RequestSpecification reqSpec;
     private Cookies cookies;
