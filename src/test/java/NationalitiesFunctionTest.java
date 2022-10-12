@@ -7,8 +7,8 @@ import org.testng.annotations.Test;
 
 import java.util.HashMap;
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.*;
 
 public class NationalitiesFunctionTest {
     private RequestSpecification reqSpec;

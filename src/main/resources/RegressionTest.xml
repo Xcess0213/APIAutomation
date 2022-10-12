@@ -3,9 +3,9 @@
     <test name="Regression Test">
 
         <classes>
-            <class name="GoRestUserTestWithPOJO"></class>
-            <class name="ZippoTest"></class>
-            <class name="GoRestUserFunction"></class>
+            <class name="demo_Mersys_DiscountTest"></class>
+            <class name="Demo_Mersys_CitizenShipTest"></class>
+            <class name="Demo_Mersys_FeesTest"></class>
         </classes>
 
     </test>

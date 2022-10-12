@@ -11,11 +11,10 @@ import java.util.HashMap;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-public class demo_Mersys_DiscountTest {
-
+public class Demo_Mersys_CitizenShipTest {
     private RequestSpecification reqSpec;
     private Cookies cookies;
-    private String discount_id;
+    private String citizen_id;
 
     @BeforeClass
     public void setup() {
@@ -48,114 +47,107 @@ public class demo_Mersys_DiscountTest {
         credentials.put("password", "Richfield2020");
         credentials.put("rememberME", "true");
 
-         given()
+        given()
                 .spec(reqSpec)
                 .body(credentials)
                 .when()
                 .post("/auth/login")
                 .then()
                 .statusCode(401);
-
     }
     @Test(priority = 3)
-    public void createDiscountTest() {
+    public void createCitizenshipTest() {
         HashMap<String, String> reqBody = new HashMap<>();
-        reqBody.put("description", "JohnAdam");
-        reqBody.put("code", "1231");
-        reqBody.put("active", "true");
+        reqBody.put("name", "ABZ123Z");
+        reqBody.put("shortName", "ABZZ");
 
-        discount_id =  given()
+        citizen_id =  given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .body(reqBody)
                 .when()
-                .post("/school-service/api/discounts")
+                .post("/school-service/api/citizenships")
                 .then()
                 .log().body()
                 .statusCode(201)
-                .body("description", equalTo(reqBody.get("description")))
-                .body("code", equalTo(reqBody.get("code")))
+                .body("name", equalTo(reqBody.get("name")))
+                .body("shortName", equalTo(reqBody.get("shortName")))
                 .extract().jsonPath().getString("id");
-
     }
     @Test(priority = 4)
-    public void getDiscountTest() {
+    public void getCitizenshipTest() {
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .when()
-                .get("/school-service/api/discounts/" + discount_id)
+                .get("/school-service/api/citizenships/" + citizen_id)
                 .then()
                 .statusCode(200);
     }
     @Test(priority = 5)
-    public void createDiscountNegativeTest() {
+    public void createFeesNegativeTest() {
         HashMap<String, String> reqBody = new HashMap<>();
-        reqBody.put("description", "JohnAdam5");
-        reqBody.put("code", "1239");
-        reqBody.put("active", "true");
+        reqBody.put("name", "ABZ123Z");
+        reqBody.put("shortName", "ABZZ");
 
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .body(reqBody)
                 .when()
-                .post("/school-service/api/discounts")
+                .post("/school-service/api/fee-types")
                 .then()
                 .log().body()
                 .statusCode(400);
     }
     @Test(priority = 6)
-    public void editDiscountTest() {
+    public void editCitizenshipTest() {
         HashMap<String, String> updateReqBody = new HashMap<>();
-        updateReqBody.put("id", discount_id);
-        updateReqBody.put("description", "XYZ098A");
-        updateReqBody.put("code", "098");
-        updateReqBody.put("active", "true");
+        updateReqBody.put("id", citizen_id);
+        updateReqBody.put("name", "XYZ098A");
+        updateReqBody.put("code", "XYZA");
 
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .body(updateReqBody)
                 .when()
-                .put("/school-service/api/discounts")
+                .put("/school-service/api/citizenships")
                 .then()
                 .log().body()
                 .statusCode(200)
-                .body("description", equalTo(updateReqBody.get("description")));
+                .body("name", equalTo(updateReqBody.get("name")));
     }
     @Test(priority = 7)
-    public void deleteDiscountTest() {
+    public void deleteCitizenshipTest() {
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .when()
-                .delete("/school-service/api/discounts/" + discount_id)
+                .delete("/school-service/api/citizenships/" + citizen_id)
                 .then()
                 .log().body()
                 .statusCode(200);
     }
     @Test(priority = 8)
-    public void getDiscountNegativeTest() {
+    public void getCitizenshipNegativeTest() {
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .when()
-                .get("/school-service/api/discounts/" + discount_id)
+                .get("/school-service/api/citizenships/" + citizen_id)
                 .then()
                 .statusCode(400);
     }
     @Test(priority = 9)
-    public void deleteDiscountNegativeTest() {
+    public void deleteFeesNegativeTest() {
         given()
                 .spec(reqSpec)
                 .cookies(cookies)
                 .when()
-                .delete("/school-service/api/discounts/" + discount_id)
+                .delete("/school-service/api/citizenships/" + citizen_id)
                 .then()
                 .log().body()
                 .statusCode(400);
     }
-
-
 }
